@@ -31,8 +31,8 @@ public class ShippingPersonEntity {
     @Column(nullable = false, length = 50)
     private String email;
 
-    @Column(nullable = false, length = 50)
-    private int phone;
+    @Column(nullable = false, length = 20)
+    private String phone;
 
     @Column(nullable = false, length = 50)
     private String address;
@@ -42,5 +42,5 @@ public class ShippingPersonEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private ShippingPersonType ShippingPersonType;
+    private ShippingPersonType shippingPersonType;
 }

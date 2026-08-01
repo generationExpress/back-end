@@ -37,7 +37,7 @@ public class OrderEntity {
 
     @CreationTimestamp
     @Column(name = "request_date")
-    private LocalDateTime requestDate;
+    private Date requestDate;
 
     @Column(name = "assigned_date")
     private LocalDateTime assignedDate;
@@ -52,11 +52,11 @@ public class OrderEntity {
     @JoinColumn(name = "driver_id", referencedColumnName = "id")
     private DriverEntity driver;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "sender_id", referencedColumnName = "id")
     private ShippingPersonEntity sender;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "recipient_id")
     private ShippingPersonEntity recipient;
 

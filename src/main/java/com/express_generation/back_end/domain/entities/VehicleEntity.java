@@ -22,7 +22,7 @@ public class VehicleEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @Column(nullable = false, length = 6)
+    @Column(nullable = false, length = 6, unique = true)
     private String licensePlate;
 
     @Enumerated(EnumType.STRING)
