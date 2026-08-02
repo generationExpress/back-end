@@ -22,7 +22,7 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class VehivleService implements IVehicleService {
+public class VehicleService implements IVehicleService {
 
     @Autowired
     private VehicleRepository vehicleRepository;
