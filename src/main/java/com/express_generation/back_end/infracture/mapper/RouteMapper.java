@@ -12,13 +12,13 @@ public interface RouteMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "order", ignore = true)
+    @Mapping(target = "orders", ignore = true)
     RouteEntity toEntity(RouteRequest request);
 
     RouteResponse toResponse(RouteEntity entity);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "order", ignore = true)
+    @Mapping(target = "orders", ignore = true)
     void updateEntityFromRequest(RouteRequest request, @MappingTarget RouteEntity entity);
 }

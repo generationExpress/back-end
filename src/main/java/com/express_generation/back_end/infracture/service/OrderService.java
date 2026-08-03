@@ -2,6 +2,7 @@ package com.express_generation.back_end.infracture.service;
 
 import com.express_generation.back_end.api.dtos.request.OrderRequest;
 import com.express_generation.back_end.api.dtos.response.OrderResponse;
+import com.express_generation.back_end.api.dtos.response.OrderStatusResponse;
 import com.express_generation.back_end.domain.entities.DriverEntity;
 import com.express_generation.back_end.domain.entities.OrderEntity;
 import com.express_generation.back_end.domain.entities.ShippingPersonEntity;
@@ -45,20 +46,39 @@ public class OrderService implements IOrderService {
     @Override
     public OrderResponse create(OrderRequest request) throws BadRequestException {
 
-        if (request.getRecipient().getShippingPersonType() == request.getSender().getShippingPersonType()) throw new BadRequestException(
-                ErrorMessages.ShippingPersonType());
+        if (request.getRecipient().getShippingPersonType() == request.getSender().getShippingPersonType())
+            throw new BadRequestException(ErrorMessages.ShippingPersonType());
 
+        Optional<OrderEntity> existingTrackingNumber = this.orderRepository.findBytrackingNumber(request.getTrackingNumber());
         Optional<DriverEntity> existingDrive = this.driverRepository.findById(request.getDriverId());
 
-        if (existingDrive.isEmpty()) throw new BadRequestException(ErrorMessages.IdNotFound("Driver"));
+        Optional<ShippingPersonEntity> existingShippingPersonSender = this.shippingPersonRepository.findBydocumentNumber(
+                request.getSender().getDocumentNumber());
+        Optional<ShippingPersonEntity> existingShippingRecipient = this.shippingPersonRepository.findBydocumentNumber(
+                request.getRecipient().getDocumentNumber());
 
-        ShippingPersonEntity sender = this.shippingPersonMapper.toEntity(request.getSender());
-        ShippingPersonEntity recipient = this.shippingPersonMapper.toEntity(request.getRecipient());
+        if (existingDrive.isEmpty()) throw new BadRequestException(ErrorMessages.IdNotFound("Driver"));
+        if (existingTrackingNumber.isPresent()) throw new BadRequestException(ErrorMessages.alreadyExists(request.getTrackingNumber()));
+
+        ShippingPersonEntity senderSaved;
+        ShippingPersonEntity recipientSaved;
+
+        if (existingShippingPersonSender.isEmpty()) {
+            senderSaved = this.shippingPersonRepository.save(this.shippingPersonMapper.toEntity(request.getSender()));
+        }else {
+            senderSaved = existingShippingPersonSender.get();
+        }
+
+        if(existingShippingRecipient.isEmpty()){
+            recipientSaved = this.shippingPersonRepository.save(this.shippingPersonMapper.toEntity(request.getRecipient()));
+        } else {
+            recipientSaved = existingShippingRecipient.get();
+        }
 
         OrderEntity orderEntity = this.orderMapper.toEntity(request);
         orderEntity.setDriver(existingDrive.get());
-        orderEntity.setRecipient(recipient);
-        orderEntity.setSender(sender);
+        orderEntity.setRecipient(recipientSaved);
+        orderEntity.setSender(senderSaved);
 
         OrderEntity orderSaved = this.orderRepository.save(orderEntity);
 

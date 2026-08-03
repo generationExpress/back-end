@@ -25,7 +25,7 @@ public class ShippingPersonEntity {
     @Column(nullable = false, length = 50)
     private String lastName;
 
-    @Column(name = "document_number", nullable = false, length = 30)
+    @Column(name = "document_number", nullable = false, length = 30, unique = true)
     private String documentNumber;
 
     @Column(nullable = false, length = 50)

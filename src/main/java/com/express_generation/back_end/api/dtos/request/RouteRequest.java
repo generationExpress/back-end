@@ -9,6 +9,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -27,6 +29,6 @@ public class RouteRequest {
     @Positive(message = "Estimated time must be greater than 0")
     private Integer estimatedTimeMinutes;
 
-    @NotNull(message = "Order ID is required")
-    private String orderId;
+    @NotNull(message = "Order IDs list is required")
+    private List<String> orderIds;
 }
