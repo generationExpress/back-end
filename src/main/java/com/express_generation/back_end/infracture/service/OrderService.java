@@ -138,7 +138,7 @@ public class OrderService implements IOrderService {
     @Override
     public OrderResponse findByOrderNumber(String orderNumber) {
 
-        return this.orderMapper.toResponse( orderRepository.findByOrderNumber(orderNumber).orElseThrow(() ->
+        return this.orderMapper.toResponse( orderRepository.findBytrackingNumber(orderNumber).orElseThrow(() ->
                 new RuntimeException(ErrorMessages.NotFound(orderNumber))));
     }
 

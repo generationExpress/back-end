@@ -13,6 +13,5 @@ public interface OrderRepository extends JpaRepository<OrderEntity, String> {
     Optional<OrderEntity> findBytrackingNumber(String trackingNumber);
 
     List<OrderEntity> findByRouteId(String routeId);
-    Optional<OrderEntity> findByOrderNumber(String orderNumber);
 }
 
