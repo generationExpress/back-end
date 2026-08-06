@@ -40,6 +40,13 @@ public class OrderController {
         return ResponseEntity.ok(this.orderService.getById(id));
     }
 
+    @GetMapping("/rastreo/{orderNumber}")
+    public ResponseEntity<OrderResponse> getOrderNumber(@PathVariable String orderNumber) throws BadRequestException {
+
+        return ResponseEntity.ok(this.orderService.findByOrderNumber(orderNumber));
+    }
+
+
     @GetMapping("/route/{routeId}")
     public ResponseEntity<List<OrderResponse>> getOrdersByRouteId(
             @PathVariable String routeId) throws BadRequestException {

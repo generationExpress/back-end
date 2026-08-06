@@ -2,7 +2,6 @@ package com.express_generation.back_end.infracture.service;
 
 import com.express_generation.back_end.api.dtos.request.OrderRequest;
 import com.express_generation.back_end.api.dtos.response.OrderResponse;
-import com.express_generation.back_end.api.dtos.response.OrderStatusResponse;
 import com.express_generation.back_end.domain.entities.DriverEntity;
 import com.express_generation.back_end.domain.entities.OrderEntity;
 import com.express_generation.back_end.domain.entities.ShippingPersonEntity;
@@ -134,6 +133,13 @@ public class OrderService implements IOrderService {
         return orders.stream()
                 .map(this.orderMapper::toResponse)
                 .toList();
+    }
+
+    @Override
+    public OrderResponse findByOrderNumber(String orderNumber) {
+
+        return this.orderMapper.toResponse( orderRepository.findByOrderNumber(orderNumber).orElseThrow(() ->
+                new RuntimeException(ErrorMessages.NotFound(orderNumber))));
     }
 
     private OrderEntity find(String id) throws BadRequestException {
