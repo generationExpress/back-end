@@ -27,6 +27,7 @@ public class OrderResponse {
     private BigDecimal totalCost;
 
     private DriverResponse driver;
+    private String driverName;
     private ShippingPersonResponse sender;
     private ShippingPersonResponse recipient;
 

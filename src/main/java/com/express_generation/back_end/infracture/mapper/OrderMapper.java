@@ -29,6 +29,7 @@ public interface OrderMapper {
     @Mapping(target = "delivery", ignore = true)
     OrderEntity toEntity(OrderRequest request);
 
+    @Mapping(target = "driverName", expression = "java(entity.getDriver() != null && entity.getDriver().getUser() != null ? entity.getDriver().getUser().getFirstName() + \" \" + entity.getDriver().getUser().getLastName() : null)")
     OrderResponse toResponse(OrderEntity entity);
 
     @Mapping(target = "id", ignore = true)

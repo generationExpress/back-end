@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/order")
 @AllArgsConstructor
@@ -36,6 +38,13 @@ public class OrderController {
     public ResponseEntity<OrderResponse> getById(@PathVariable String id) throws BadRequestException {
 
         return ResponseEntity.ok(this.orderService.getById(id));
+    }
+
+    @GetMapping("/route/{routeId}")
+    public ResponseEntity<List<OrderResponse>> getOrdersByRouteId(
+            @PathVariable String routeId) throws BadRequestException {
+
+        return ResponseEntity.ok(this.orderService.getOrdersByRouteId(routeId));
     }
 
     @PostMapping

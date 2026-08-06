@@ -23,4 +23,5 @@ public class OrderBasicResponse {
     private BigDecimal weightKg;
     private LocalDateTime requestDate;
     private Date estimatedDeliveryDate;
+    private String driverName;
 }
