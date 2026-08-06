@@ -12,6 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import com.express_generation.back_end.api.dtos.response.OrderResponse;
+import com.express_generation.back_end.infracture.adstract_service.IOrderService;
+import java.util.List;
+
 @RestController
 @RequestMapping("/route")
 @AllArgsConstructor
@@ -19,6 +23,9 @@ public class RouteController {
 
     @Autowired
     private IRouteService routeService;
+
+    @Autowired
+    private IOrderService orderService;
 
     @GetMapping
     public ResponseEntity<Page<RouteResponse>> getAll(
@@ -36,6 +43,13 @@ public class RouteController {
             @PathVariable String id) throws BadRequestException {
 
         return ResponseEntity.ok(this.routeService.getById(id));
+    }
+
+    @GetMapping("/{routeId}/orders")
+    public ResponseEntity<List<OrderResponse>> getOrdersByRouteId(
+            @PathVariable String routeId) throws BadRequestException {
+
+        return ResponseEntity.ok(this.orderService.getOrdersByRouteId(routeId));
     }
 
     @PostMapping

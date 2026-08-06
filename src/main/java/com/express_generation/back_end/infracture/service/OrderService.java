@@ -8,6 +8,7 @@ import com.express_generation.back_end.domain.entities.OrderEntity;
 import com.express_generation.back_end.domain.entities.ShippingPersonEntity;
 import com.express_generation.back_end.domain.repositories.DriverRepository;
 import com.express_generation.back_end.domain.repositories.OrderRepository;
+import com.express_generation.back_end.domain.repositories.RouteRepository;
 import com.express_generation.back_end.domain.repositories.ShippingPersonRepository;
 import com.express_generation.back_end.infracture.adstract_service.IOrderService;
 import com.express_generation.back_end.infracture.mapper.OrderMapper;
@@ -23,6 +24,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -41,6 +43,9 @@ public class OrderService implements IOrderService {
 
     @Autowired
     private DriverRepository  driverRepository;
+
+    @Autowired
+    private RouteRepository routeRepository;
 
     @Transactional
     @Override
@@ -115,6 +120,20 @@ public class OrderService implements IOrderService {
         this.orderMapper.updateEntityFromRequest(orderRequest, orderEntity);
 
         return this.orderMapper.toResponse(orderEntity);
+    }
+
+    @Override
+    public List<OrderResponse> getOrdersByRouteId(String routeId) throws BadRequestException {
+
+        if (!this.routeRepository.existsById(routeId)) {
+            throw new BadRequestException(ErrorMessages.IdNotFound("Route"));
+        }
+
+        List<OrderEntity> orders = this.orderRepository.findByRouteId(routeId);
+
+        return orders.stream()
+                .map(this.orderMapper::toResponse)
+                .toList();
     }
 
     private OrderEntity find(String id) throws BadRequestException {

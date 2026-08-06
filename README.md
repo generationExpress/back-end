@@ -142,6 +142,7 @@ URL Base: `http://localhost:8080/api/v1`
 |--------|----------|-------------|
 | GET | `/order` | Listar pedidos (paginado: `page`, `size`, header `sortType`) |
 | GET | `/order/{id}` | Obtener pedido por ID |
+| GET | `/order/route/{routeId}` | Listar pedidos asignados a una ruta (incluye nombre de conductor) |
 | POST | `/order` | Crear pedido |
 | PUT | `/order/{id}` | Actualizar pedido |
 
@@ -151,6 +152,7 @@ URL Base: `http://localhost:8080/api/v1`
 |--------|----------|-------------|
 | GET | `/route` | Listar rutas (paginado: `page`, `size`, header `sortType`) |
 | GET | `/route/{id}` | Obtener ruta por ID |
+| GET | `/route/{routeId}/orders` | Listar pedidos asignados a la ruta (incluye nombre de conductor) |
 | POST | `/route` | Crear ruta para un pedido |
 | PUT | `/route/{id}` | Actualizar ruta existente |
 

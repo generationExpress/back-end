@@ -7,10 +7,15 @@ import com.express_generation.back_end.infracture.adstract_service.generic.ReadA
 import com.express_generation.back_end.infracture.adstract_service.generic.ReadByIdService;
 import com.express_generation.back_end.infracture.adstract_service.generic.UpdateService;
 
+import org.apache.coyote.BadRequestException;
+import java.util.List;
+
 public interface IOrderService extends ReadAllService<OrderResponse>,
         ReadByIdService<OrderResponse, String>,
         CreateService<OrderRequest, OrderResponse>,
         UpdateService<OrderRequest, OrderResponse, String> {
 
     static final String FIELD_BY_SORT = "requestDate";
+
+    List<OrderResponse> getOrdersByRouteId(String routeId) throws BadRequestException;
 }
