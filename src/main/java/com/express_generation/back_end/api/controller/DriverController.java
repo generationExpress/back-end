@@ -45,6 +45,8 @@ public class DriverController {
         return  ResponseEntity.ok(this.driverService.create(request));
     }
 
+
+
     @PutMapping("/{id}")
     public ResponseEntity<DriverResponse> update(
             @Validated @RequestBody DriverRequest request,
